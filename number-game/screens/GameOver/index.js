@@ -9,7 +9,11 @@ const GameOver = props => {
         <View style={styles.screen}>
             <TitleText>The game is over</TitleText>
             <View style={styles.imageContainer}>
-                <Image style={styles.image} source={require('../../assets/success.png')} />
+                <Image
+                    style={styles.image}
+                    // source={require('../../assets/success.png')}
+                    source={{uri: 'https://abrahamswallet.com/wp-content/uploads/2017/12/samuel-ferrara-117219-1180x770.jpg'}}
+                />
             </View>
             <BodyText>Number of rounds: {props.roundsNumber}</BodyText>
             <BodyText>Number was: {props.userNumber}</BodyText>
