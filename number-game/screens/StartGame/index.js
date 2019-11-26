@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Text, Button, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
 
+import BodyText from '../../components/BodyText';
 import Card from '../../components/Card';
 import Colors from '../../constants/colors';
 import Input from '../../components/Input';
 import NumberContainer from '../../components/NumberContainer';
+import TitleText from '../../components/TitleText';
 
 const StartGame = props => {
     const [enteredValue, setEnteredValue] = useState('');
@@ -42,7 +44,7 @@ const StartGame = props => {
     if (confirmed) {
         confirmedOutput = (
             <Card style={styles.summaryContainer}>
-                <Text>You Selected</Text>
+                <BodyText>You Selected</BodyText>
                 <NumberContainer>{selectedNumber}</NumberContainer>
                 <Button
                     title="Start Game"
@@ -55,9 +57,9 @@ const StartGame = props => {
     return (
         <TouchableWithoutFeedback onPress={() => {Keyboard.dismiss()}}>
             <View style={styles.screen}>
-                <Text style={styles.title}>Start a new game</Text>
+                <TitleText style={styles.title}>Start a new game</TitleText>
                 <Card style={styles.inputContainer}>
-                    <Text>Select a number</Text>
+                    <BodyText>Select a number</BodyText>
                     <Input
                         blurOnSubmit
                         autoCapitalize='none'
@@ -92,8 +94,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 20,
-        marginVertical: 10,
-        fontFamily: 'open-sans-bold'
+        marginVertical: 10
     },
     buttonContainer: {
         flexDirection: 'row',
@@ -111,6 +112,9 @@ const styles = StyleSheet.create({
     summaryContainer: {
         marginTop: 20,
         alignItems: 'center'
+    },
+    text: {
+        fontFamily: 'open-sans'
     }
 });
 
