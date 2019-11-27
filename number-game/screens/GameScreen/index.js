@@ -24,17 +24,32 @@ const renderListItem = (value, numOfRound) => (
         <BodyText>#{numOfRound}</BodyText>
         <BodyText>{value}</BodyText>
     </View>
-)
+);
 
 const GameScreen = props => {
     const initialGuess = generateRandomBetween(1,100,props.userChoice);
     const [currentGuess, setCurrentGuess] = useState(initialGuess);
     const [pastGuesses, setPastGuesses] = useState([initialGuess]);
+    const [availableDeviceWidth, setAvailableDeviceWidth] = useState(Dimensions.get('window').width);
+    const [availableDeviceHeight, setAvailableDeviceHeight] = useState(Dimensions.get('window').height);
 
     const currentLow = useRef(1);
     const currentHigh = useRef(100);
 
     const { userChoice, onGameOver } = props;
+
+    useEffect(() => {
+        const updateLayout = () => {
+            setAvailableDeviceWidth(Dimensions.get('window').width);
+            setAvailableDeviceHeight(Dimensions.get('window').height);
+        }
+
+        Dimensions.addEventListener('change', updateLayout);
+
+        return () => {
+            Dimensions.removeEventListener('change', updateLayout);
+        };
+    });
 
     useEffect(() => {
         if (currentGuess === userChoice) {
@@ -59,6 +74,42 @@ const GameScreen = props => {
         // setRounds(curRounds => curRounds + 1);
         setPastGuesses(curPastGuesses => [nextNumber, ...curPastGuesses]);
     };
+
+    if (availableDeviceHeight < 500) {
+        return (
+            <View style={styles.screen}>
+                <Text>Opponents Guess</Text>
+                <View>
+                    <MainButton
+                        onPress={() => nextGuessHandler('lower')}
+                    >
+                        <Ionicons
+                            name="md-remove"
+                            size={24}
+                            color="white"
+                        />
+                    </MainButton>
+                    <NumberContainer>{currentGuess}</NumberContainer>
+                    <MainButton
+                        onPress={() => nextGuessHandler('greater')}
+                    >
+                        <Ionicons
+                            name="md-add"
+                            size={24}
+                            color="white"
+                        />
+                    </MainButton>
+                </View>
+                <View style={styles.listContainer}>
+                    <ScrollView contentContainerStyle={styles.list}>
+                        {pastGuesses.map(
+                            (guess, index) => renderListItem(guess, pastGuesses.length - index)
+                        )}
+                    </ScrollView>
+                </View>
+            </View>
+        )
+    }
 
     return (
         <View style={styles.screen}>
@@ -107,6 +158,12 @@ const styles = StyleSheet.create({
         marginTop: Dimensions.get('window').height > 600 ? 20 : 5,
         width: 400,
         maxWidth: '90%'
+    },
+    controls: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        width: '80%'
     },
     listContainer: {
         flex: 1,
