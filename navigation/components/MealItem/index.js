@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, TouchableOpacity, ImageBackground } from 'react
 const MealItem = props => {
     return (
         <View style={styles.mealItem}>
-            <TouchableOpacity onPress={props.onSelecteMeal}>
+            <TouchableOpacity onPress={props.onSelectMeal}>
                 <View>
                     <View style={{...styles.mealRow, ...styles.mealHeader}}>
                         <ImageBackground
