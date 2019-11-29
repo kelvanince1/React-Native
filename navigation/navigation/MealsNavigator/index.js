@@ -80,7 +80,7 @@ const MealsFavTabNavigator = Platform.OS === 'android' ? createMaterialBottomTab
     tabBarOptions: {
         labelStyle: {
             fontFamily: 'open-sans'
-        }
+        },
         activeTintColor: Colors.secondary
     }
 });
