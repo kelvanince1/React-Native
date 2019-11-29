@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, Text, StyleSheet, Switch } from 'react-native';
+import { View, Text, StyleSheet, Switch, Platform } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
 import HeaderButton from '../../components/HeaderButton';
@@ -7,17 +7,17 @@ import Colors from '../../constants/colors';
 
 const FilterSwitch = props => {
     return (
-        <View style={styles.filterContainer}>
-                <Text>{props.label}</Text>
-                <Switch
-                    value={props.state}
-                    onValueChange={props.onChange}
-                    trackColor={{ true: Colors.primary }}
-                    thumbColor={Colors.secondary}
-                />
-            </View>
+      <View style={styles.filterContainer}>
+        <Text>{props.label}</Text>
+        <Switch
+          trackColor={{ true: Colors.primaryColor }}
+          thumbColor={Platform.OS === 'android' ? Colors.primaryColor : ''}
+          value={props.state}
+          onValueChange={props.onChange}
+        />
+      </View>
     );
-}
+  };
 
 const Filters = props => {
     const { navigation } = props;
